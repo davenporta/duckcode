@@ -3,9 +3,15 @@ warnings.filterwarnings("ignore")
 
 from pydub import AudioSegment
 from pydub.playback import play
+import sys
+
+try:
+    mode = sys.argv[1]
+except:
+    mode = None
 
 dot = AudioSegment.from_wav("dot2.wav")
-dash = AudioSegment.from_wav("dash2.wav")
+dash = AudioSegment.from_wav("dash3.wav")
 cspace = AudioSegment.from_wav("spacer2.wav")
 startcode = AudioSegment.from_wav("start.wav")
 
@@ -26,6 +32,8 @@ code = {'A': '.-',     'B': '-...',   'C': '-.-.',
         '6': '-....',  '7': '--...',  '8': '---..',
         '9': '----.',
 
+        '.': '.-.-.-', '!': '-.-.--', '?': '..--..',
+
         ' ': '/'}
 
 def to_morse(s):
@@ -34,7 +42,10 @@ def to_morse(s):
     phrase = ' '.join(code[i.upper()] for i in s)
     print("Sending: " + phrase)
     queue = [sound[c] for c in phrase]
-    out = startcode
+    if mode == 'nostart':
+        out = cspace
+    else:
+        out = startcode
     for char in queue:
         out += char
     play(out)
