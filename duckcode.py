@@ -8,7 +8,7 @@ import sys
 try:
     mode = sys.argv[1]
 except:
-    mode = None
+    mode = 'normal'
 
 dot = AudioSegment.from_wav("dot2.wav")
 dash = AudioSegment.from_wav("dash3.wav")
@@ -36,13 +36,14 @@ code = {'A': '.-',     'B': '-...',   'C': '-.-.',
 
         ' ': '/'}
 
-def to_morse(s):
+
+def to_morse(s, mode):
     if s == '/quit':
         exit()
     if s == '/quackless':
-        mode == 'nostart'
+        mode = 'nostart'
         play(dot)
-        return
+        return mode
     phrase = ' '.join(code[i.upper()] for i in s)
     print("Sending: " + phrase)
     queue = [sound[c] for c in phrase]
@@ -55,6 +56,7 @@ def to_morse(s):
     play(out)
     print("Sent!")
     print("")
+    return mode
 
 print("")
 print("Duck Code V1.1 by Alex Davenport")
@@ -63,4 +65,4 @@ print("Type /quit to exit and /quackless to remove start message")
 print("")
 
 while 1:
-    to_morse(input("Message to Send: "))
+    mode = to_morse(input("Message to Send: "), mode)
