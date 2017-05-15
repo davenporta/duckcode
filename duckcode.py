@@ -41,6 +41,8 @@ def to_morse(s):
         exit()
     if s == '/quackless':
         mode == 'nostart'
+        play(dot)
+        return
     phrase = ' '.join(code[i.upper()] for i in s)
     print("Sending: " + phrase)
     queue = [sound[c] for c in phrase]
@@ -55,7 +57,7 @@ def to_morse(s):
     print("")
 
 print("")
-print("Duck Code V1.0 by Alex Davenport")
+print("Duck Code V1.1 by Alex Davenport")
 print("--------------------------------")
 print("Type /quit to exit and /quackless to remove start message")
 print("")
